@@ -4,7 +4,7 @@ export const useStore = defineStore({
   id: "system",
   state: () => ({
     user: {},
-    loggedIn: false
+    loggedIn: false,
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,

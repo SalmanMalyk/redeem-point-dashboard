@@ -7,7 +7,7 @@ class UserService {
     return axios.post(`${API_URL}/'add-sale`, {
       mobile_no: sale.phone,
       amount: sale.amount,
-      headers: authHeader()
+      headers: authHeader(),
     });
   }
 }
