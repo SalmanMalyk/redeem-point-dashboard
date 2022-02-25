@@ -4,54 +4,94 @@
       <div class="card card-body">
         <Form @submit="handleLogin" :validation-schema="schema">
           <div class="form-group">
-            <label for="username">Username</label>
-            <Field name="email" type="text" class="form-control" />
-            <ErrorMessage name="email" class="error-feedback" />
+            <label for="username">Email</label>
+            <Field name="email" type="text" class="form-control mb-1" />
+            <ErrorMessage name="email" class="text-danger" />
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <Field name="password" type="password" class="form-control" />
-            <ErrorMessage name="password" class="error-feedback" />
+            <Field name="password" type="password" class="form-control mb-1" />
+            <ErrorMessage name="password" class="text-danger" />
           </div>
-          <div class="form-group">
+          <div class="form-group mt-3">
             <button class="btn btn-primary btn-block" :disabled="loading">
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
               ></span>
+              &nbsp;
               <span>Login</span>
             </button>
-          </div>
-          <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
           </div>
         </Form>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
+import { useAuthStore } from "../../stores/auth";
+import Snackbar from "node-snackbar";
 
 export default {
-  name: "Login",
   components: {
     Form,
     Field,
     ErrorMessage,
   },
   data() {
-    const scheme = yup.object().shape({
-      email: yup.email().required("Email is required"),
+    const schema = yup.object().shape({
+      email: yup.string().email().required("Email is required"),
       password: yup.string().required("Password is required"),
     });
+
+    const store = useAuthStore();
+
     return {
-        loading: false,
+      loading: false,
+      message: "",
+      schema,
+      store,
     };
+  },
+  computed: {
+    loggedIn() {
+      return this.store.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/");
+    }
+  },
+  methods: {
+    handleLogin(user) {
+      this.loading = true;
+
+      // call store action
+      this.store.login(user).then(
+        () => {
+          this.$router.push("/");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          if (error.response) {
+            Snackbar.show({
+              text: this.message,
+              pos: "bottom-right"
+            });
+          }
+        }
+      );
+    },
   },
 };
 </script>

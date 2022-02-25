@@ -1,6 +1,5 @@
 import axios from "axios";
-const API_URL = "http://5207-137-59-228-114.ngrok.io/api";
-const useStore = useStore();
+const API_URL = "http://7156-137-59-228-114.ngrok.io/api";
 
 class AuthService {
   login(user) {
@@ -11,24 +10,15 @@ class AuthService {
       })
       .then(({ data }) => {
         if (data.token) {
-          useStore.$patch({
-            user: user,
-            loggedIn: true,
-          });
           localStorage.setItem("user", JSON.stringify(data));
         }
         return data;
-      })
-      .catch((error) => console.log(error));
+      });
   }
 
   logout() {
-    useStore.$patch({
-      user: null,
-      loggedIn: false,
-    });
     localStorage.removeItem("user");
   }
 }
 
-export default AuthService();
+export default new AuthService();

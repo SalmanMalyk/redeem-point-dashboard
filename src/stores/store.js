@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import AuthService from "../services/auth.service";
+import AuthService from "../services/auth-service";
 import Snackbar from "node-snackbar";
 
 const user = JSON.parse(localStorage.getItem("user"));

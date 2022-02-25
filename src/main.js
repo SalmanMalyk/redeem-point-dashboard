@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "node-snackbar/dist/snackbar.min.css";
 
 const app = createApp(App);
 

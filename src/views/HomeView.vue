@@ -1,3 +1,15 @@
+<script>
+import AppLayout from "./layout/AppLayout.vue";
+export default {
+  components: {
+    AppLayout
+  }
+}
+
+</script>
+
 <template>
-  <h1>Home Page</h1>
+  <AppLayout>
+    <h1>Home Page</h1>
+  </AppLayout>
 </template>
