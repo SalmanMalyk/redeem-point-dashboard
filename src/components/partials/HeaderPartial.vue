@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">Redeem Points</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -13,8 +13,8 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse float-right" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <RouterLink to="/" active-class="active" class="nav-link"
               >Home</RouterLink
@@ -29,9 +29,8 @@
             >
           </li>
         </ul>
-
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item dropdown ml-auto">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown dropstart">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -39,13 +38,18 @@
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
+              v-text="user.name"
             >
-              Dropdown link
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+                <a
+                  href="javascript:void(0)"
+                  class="dropdown-item"
+                  @click.prevent="logout"
+                  >Logout</a
+                >
+              </li>
             </ul>
           </li>
         </ul>
@@ -55,7 +59,31 @@
 </template>
 
 <script>
+import { useAuthStore } from "../../stores/auth";
+import Snackbar from "node-snackbar";
+
 export default {
   name: "HeaderPartial",
+  data() {
+    const store = useAuthStore();
+    return {
+      store,
+    };
+  },
+  computed: {
+    user() {
+      return this.store.user.user || null;
+    },
+  },
+  methods: {
+    logout() {
+      this.store.logout();
+      this.$router.push("/login");
+      Snackbar.show({
+        text: "User logged out successfully.",
+        pos: "bottom-right",
+      });
+    },
+  },
 };
 </script>

@@ -12,6 +12,8 @@ export default {
 
 <template>
   <HeaderPartial />
-  <slot />
+  <div class="container mt-4">
+    <slot />
+  </div>
   <FooterPartial />
 </template>

@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_URL = "http://7156-137-59-228-114.ngrok.io/api";
+import { config } from "./config";
 
 class AuthService {
   login(user) {
     return axios
-      .post(`${API_URL}/login`, {
+      .post(`${config.api_url}/login`, {
         email: user.email,
         password: user.password,
       })

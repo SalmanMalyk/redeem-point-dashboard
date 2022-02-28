@@ -1,14 +1,26 @@
 import axios from "axios";
-import { API_URL } from "./auth-service";
 import authHeader from "./auth-header";
+import { config } from "./config";
 
 class UserService {
   addSale(sale) {
-    return axios.post(`${API_URL}/'add-sale`, {
+    return axios.post(`${config.api_url}/'add-sale`, {
       mobile_no: sale.phone,
       amount: sale.amount,
       headers: authHeader(),
     });
+  }
+
+  getTransactions(date = null) {
+    return axios.post(
+      `${config.api_url}/sale-list`,
+      {
+        date: date,
+      },
+      {
+        headers: authHeader(),
+      }
+    );
   }
 }
 

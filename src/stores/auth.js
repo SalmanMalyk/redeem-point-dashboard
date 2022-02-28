@@ -25,9 +25,10 @@ export const useAuthStore = defineStore("authStore", {
       );
     },
     async logout() {
-      this.status.loggedIn = false;
-      this.status.user = null;
+      this.loggedIn = false;
+      this.user = null;
       AuthService.logout();
+      this.$router.push("/login");
     },
   },
 });
