@@ -7,6 +7,7 @@ export default function authHeader() {
     axios.defaults.headers.common["Authorization"] = user.token;
     return {
       Authorization: `Bearer ${user.token}`,
+      "Access-Control-Allow-Origin": "*"
     };
   } else {
     return {};

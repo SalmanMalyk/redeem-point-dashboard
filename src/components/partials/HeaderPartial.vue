@@ -30,7 +30,7 @@
           </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item dropdown dropstart">
+          <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -42,6 +42,9 @@
             >
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <RouterLink to="/settings" active-class="active" class="dropdown-item">Settings</RouterLink>
+              </li>
               <li>
                 <a
                   href="javascript:void(0)"
