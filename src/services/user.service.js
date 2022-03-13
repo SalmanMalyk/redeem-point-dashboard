@@ -22,6 +22,21 @@ class UserService {
       }
     );
   }
+
+  updateUser(user) {
+    return axios.post(
+      `${config.api_url}`,
+      {
+        percentage: user.percentage_per_sale,
+        price: user.price_per_point,
+        name: user.name,
+      },
+      {
+        headers: authHeader(),
+        
+      }
+    )
+  }
 }
 
 export default new UserService();
